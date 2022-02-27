@@ -3,12 +3,12 @@
 @tailwind components;
 @tailwind utilities;
 .card {
-    @apply bg-white rounded-lg  shadow-md relative;
+    @apply rounded-2xl  shadow-md relative border border-2;
 }
 
 .badge {
     @apply p-2 bg-gray-100  text-sm uppercase font-bold absolute top-0 ml-2 mt-2  rounded-full;
 }
 .btn {
-    @apply tracking-wider rounded-full py-2 px-3 uppercase text-xs font-bold cursor-pointer;
+    @apply tracking-wider rounded-md px-4 py-2 border border-2 uppercase  text-sm font-bold cursor-pointer;
 }
