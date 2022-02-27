@@ -26,12 +26,12 @@ services:
     volumes:
     - mysql:/var/lib/mysql
     environment:
-      - MYSQL_DATABASe=ecomm
-      - MYSQL_USER=islem
-      - MYSQL_PASSWORD=28225822
-      - MYSQL_ROOT_PASSWORD=28225822
-      - SERVICE_TAGS=dev
-      - SERVICE_NAME=mysql
+       MYSQL_DATABASE: ecomm
+       MYSQL_USER: islem
+       MYSQL_PASSWORD: 28225822
+       MYSQL_ROOT_PASSWORD: 28225822
+       SERVICE_TAGS: dev
+       SERVICE_NAME: mysql
 
     networks:
       - laravel

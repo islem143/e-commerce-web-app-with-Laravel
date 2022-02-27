@@ -1,13 +1,10 @@
 @extends('dashboard.app')
 
- 
-
-
 
 <!--content-->
 @section('content')
-    
 
+<x-model name="Product"/>   
 <div class="grid lg:grid-cols-2 xl:grid-cols-3 gap-7 w-10/12 mx-auto mt-20 ">
 <div class="card p-8 bg-blue-500 text-white hover:bg-blue-400">
   <span class="block font-light mb-4 tracking-wider">Total Products</span>
@@ -57,26 +54,12 @@
 <script>
 
   const addProductBtn=document.querySelector('#addProductBtn');
-  const closeBtn=document.querySelector('#closebtn');
-  const overlay=document.querySelector('#overlay');
-  const closeIcon=document.querySelector('#closeIcon');
-  
-  
+ 
   
   addProductBtn.addEventListener('click',()=>{
       overlay.classList.remove('hidden')
       overlay.classList.add('flex')
   })
-  
-  closeBtn.addEventListener('click',()=>{
-      overlay.classList.remove('flex')
-      overlay.classList.add('hidden')
-  })
-  closeIcon.addEventListener('click',()=>{
-      overlay.classList.remove('flex')
-      overlay.classList.add('hidden')
-  })
-  
   </script>
   
 @endsection

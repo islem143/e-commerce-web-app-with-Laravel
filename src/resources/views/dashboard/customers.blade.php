@@ -2,7 +2,7 @@
 
 @section('content')
 
-
+<x-model name="Customer"/>   
 
 <div class="grid lg:grid-cols-2 xl:grid-cols-3 gap-7 w-10/12 mx-auto mt-20 ">
 <div class="card p-8 bg-blue-500 text-white hover:bg-blue-400">

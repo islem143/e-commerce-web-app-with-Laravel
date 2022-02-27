@@ -1,6 +1,7 @@
 @extends('dashboard.app')
 
 @section('content')
+<x-model name="Order"/>   
 <div class="grid lg:grid-cols-2 xl:grid-cols-3 gap-7 w-10/12 mx-auto mt-20 ">
   <div class="card p-8 bg-blue-500 text-white hover:bg-blue-400">
     <span class="block font-light mb-4 tracking-wider">Total Orders</span>
@@ -11,7 +12,7 @@
       <span class="tracking-wider">260</span>
     </div>
   <div class="md:col-start-3 self-end justify-self-end   ">
-      <button id="addProductBtn"class="btn">Add Order</button>
+      <button id="addOrderBtn"class="btn">Add Order</button>
     </div>
   
     <div class="md:col-span-3 overflow-auto rounded-lg shadow">
@@ -51,37 +52,24 @@
     </table>
   </div>
   </div>
-  
+  <script>
+
+    const addOrdertBtn=document.querySelector('#addOrderBtn');
+    
+    
+    
+    addOrderBtn.addEventListener('click',()=>{
+        overlay.classList.remove('hidden')
+        overlay.classList.add('flex')
+    })
+    
+    
+    
+    </script>
+    
 @endsection
 
 
 
 
   
-<script>
-
-// const addProductBtn=document.querySelector('#addProductBtn');
-// const closeBtn=document.querySelector('#closebtn');
-// const overlay=document.querySelector('#overlay');
-// const closeIcon=document.querySelector('#closeIcon');
-
-
-// mobileBtn.addEventListener('click',()=>{
-// sideBar.classList.toggle('-translate-x-full');
-
-// })
-// addProductBtn.addEventListener('click',()=>{
-//     overlay.classList.remove('hidden')
-//     overlay.classList.add('flex')
-// })
-
-// closeBtn.addEventListener('click',()=>{
-//     overlay.classList.remove('flex')
-//     overlay.classList.add('hidden')
-// })
-// closeIcon.addEventListener('click',()=>{
-//     overlay.classList.remove('flex')
-//     overlay.classList.add('hidden')
-// })
-
-</script>

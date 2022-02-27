@@ -10,10 +10,10 @@
 
 </head>
 <body  class="min-w-screen w-screen ">
-  <div id="overlay" class="z-30 bg-black bg-opacity-50 absolute inset-0 hidden justify-center items-center">
+  {{-- <div id="overlay" class="z-30 bg-black bg-opacity-50 absolute inset-0 hidden justify-center items-center">
     <div class="bg-gray-200 w-96 p-5 ">
          <div class="flex justify-between mb-5" >
-             <h4 class="text-lg ">Add Product</h4>
+             <h4 class="text-lg "></h4>
              <svg id="closeIcon"xmlns="http://www.w3.org/2000/svg" class="cursor-pointer h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
@@ -46,7 +46,7 @@
             
          </div>
         </div>       
-</div>  
+</div>   --}}
 
 <div class="relative min-h-screen md:flex ">
   <div class="mobile bg-gray-800 text-gray-100 flex justify-between md:hidden">
@@ -80,11 +80,27 @@
 <script>
 const mobileBtn=document.querySelector('#mobile_btn');
 const sideBar=document.querySelector('.sidebar');
-
+const closeBtn=document.querySelector('#closebtn');
+const overlay=document.querySelector('#overlay');
+const closeIcon=document.querySelector('#closeIcon');
+  
 mobileBtn.addEventListener('click',()=>{
 sideBar.classList.toggle('-translate-x-full');
 
 })
+
+  
+  
+ 
+  
+  closeBtn.addEventListener('click',()=>{
+      overlay.classList.remove('flex')
+      overlay.classList.add('hidden')
+  })
+  closeIcon.addEventListener('click',()=>{
+      overlay.classList.remove('flex')
+      overlay.classList.add('hidden')
+  })
 
 </script>
 </body>
