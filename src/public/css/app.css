@@ -376,11 +376,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .left-0{
   left: 0px;
 }
-.z-20{
-  z-index: 20;
-}
 .z-30{
   z-index: 30;
+}
+.z-20{
+  z-index: 20;
 }
 .m-auto{
   margin: auto;
@@ -427,9 +427,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mt-7{
   margin-top: 1.75rem;
 }
-.mt-9{
-  margin-top: 2.25rem;
-}
 .mb-5{
   margin-bottom: 1.25rem;
 }
@@ -444,6 +441,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .mt-3{
   margin-top: 0.75rem;
+}
+.mb-6{
+  margin-bottom: 1.5rem;
 }
 .block{
   display: block;
@@ -478,9 +478,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-5{
   height: 1.25rem;
 }
-.h-96{
-  height: 24rem;
-}
 .h-80{
   height: 20rem;
 }
@@ -504,6 +501,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-4\/12{
   width: 33.333333%;
 }
+.w-96{
+  width: 24rem;
+}
 .w-screen{
   width: 100vw;
 }
@@ -512,9 +512,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .w-8\/12{
   width: 66.666667%;
-}
-.w-96{
-  width: 24rem;
 }
 .w-10\/12{
   width: 83.333333%;
@@ -571,6 +568,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .gap-7{
   gap: 1.75rem;
 }
+.space-x-3 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.75rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
+}
 .space-y-6 > :not([hidden]) ~ :not([hidden]){
   --tw-space-y-reverse: 0;
   margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
@@ -580,11 +582,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
   margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
-}
-.space-x-3 > :not([hidden]) ~ :not([hidden]){
-  --tw-space-x-reverse: 0;
-  margin-right: calc(0.75rem * var(--tw-space-x-reverse));
-  margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
 }
 .divide-y > :not([hidden]) ~ :not([hidden]){
   --tw-divide-y-reverse: 0;
@@ -635,6 +632,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-border-opacity: 1;
   border-color: rgb(243 244 246 / var(--tw-border-opacity));
 }
+.border-rose-600{
+  --tw-border-opacity: 1;
+  border-color: rgb(225 29 72 / var(--tw-border-opacity));
+}
 .border-gray-200{
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
@@ -667,6 +668,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(96 165 250 / var(--tw-bg-opacity));
 }
+.bg-black{
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
 .bg-gray-800{
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
@@ -674,10 +679,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-blue-800{
   --tw-bg-opacity: 1;
   background-color: rgb(30 64 175 / var(--tw-bg-opacity));
-}
-.bg-black{
-  --tw-bg-opacity: 1;
-  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
 .bg-blue-500{
   --tw-bg-opacity: 1;
@@ -695,6 +696,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(254 226 226 / var(--tw-bg-opacity));
 }
+.bg-red-500{
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
+}
 .bg-opacity-50{
   --tw-bg-opacity: 0.5;
 }
@@ -711,20 +716,17 @@ Ensure the default browser behavior of the `hidden` attribute.
 .p-4{
   padding: 1rem;
 }
-.p-10{
-  padding: 2.5rem;
-}
 .p-5{
   padding: 1.25rem;
+}
+.p-10{
+  padding: 2.5rem;
 }
 .p-8{
   padding: 2rem;
 }
 .p-2{
   padding: 0.5rem;
-}
-.p-20{
-  padding: 5rem;
 }
 .px-5{
   padding-left: 1.25rem;
@@ -808,11 +810,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .font-bold{
   font-weight: 700;
 }
-.font-extrabold{
-  font-weight: 800;
-}
 .font-light{
   font-weight: 300;
+}
+.font-extrabold{
+  font-weight: 800;
 }
 .font-semibold{
   font-weight: 600;

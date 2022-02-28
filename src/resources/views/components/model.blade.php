@@ -7,20 +7,20 @@
               </svg>
          </div>
          <div class="mt-2">
- <form action="" class="flex flex-col">
+ <form action="" class="flex flex-col font-light">
       
        <div class="mb-4">
-        <input class="bg-gray-100 w-full p-3 border border-1 rounded-lg" type="text" name=""  placeholder="{{$name}}">
+        <input class="bg-gray-100 text-xl w-full p-3 border border-1 rounded-lg" type="text" name=""  placeholder="{{$name}}">
        </div>
        <div class="mb-4">
-        <input class="bg-gray-100 w-full p-3 border border-1 rounded-lg" type="password" name=""  placeholder="Description">
+        <input class="bg-gray-100 w-full text-xl p-3 border border-1 rounded-lg" type="password" name=""  placeholder="Description">
        </div>
        <div class="mb-4">
-        <input class="bg-gray-100 w-full p-3 border border-1 rounded-lg" type="number" name=""  placeholder="Price">
+        <input class="bg-gray-100 w-full text-xl p-3 border border-1 rounded-lg" type="number" name=""  placeholder="Price">
        </div>
        <div class="mb-4">
            <label for="Image">Image</label>
-        <input id="Image"class="bg-gray-100 w-full p-3 border border-1 rounded-lg" type="file" name=""  placeholder="Image">
+        <input id="Image"class="bg-gray-100 text-xl w-full p-3 border border-1 rounded-lg" type="file" name=""  placeholder="Image">
        </div>
        <div class="mb-4">
         <button class="w-full btn text-white bg-blue-400 ">Add {{$name}}</button>

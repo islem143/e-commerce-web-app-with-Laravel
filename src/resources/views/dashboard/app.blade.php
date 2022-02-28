@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dashboard</title>
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js" ></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js" ></script> --}}
 
 </head>
 <body  class="min-w-screen w-screen ">
