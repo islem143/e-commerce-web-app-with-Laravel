@@ -18,20 +18,19 @@ use App\Models\Product;
 |
 */
 
-
-Route::middleware('auth:sanctum')->get('/products',[PostController::class,'index'])->name('products');
-Route::post('/products',[PostController::class,'store']);
-Route::get('/products/{id}',[PostController::class,'show']);
-Route::put('/products/{id}',[PostController::class,'update']);
-Route::delete('/products/{id}',[PostController::class,'destroy']);
-Route::get('/products/search/{name}',[PostController::class,'search'])->name('search');
+//Auth
 Route::middleware('auth:sanctum')->post('/logout',[LogoutApiController::class,'store'])->name('logout');
-
 Route::post('/login',[LoginApiController::class,'store'])->name('login');
-
 Route::post('/register',[RegisterApiController::class,'store'])->name('registerapi');
+//Products
+Route::middleware('auth:sanctum')->group(function(){
+Route::controller(PostController::class)->group(function() {
+    Route::get('/products','index');
+    Route::post('/products','store');
+    Route::get('/products/{id}','show');
+    Route::put('/products/{id}','update');
+    Route::delete('/products/{id}','destroy');
+    Route::get('/products/search/{name}','search');
 
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+});
 });
