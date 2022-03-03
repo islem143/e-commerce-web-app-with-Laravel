@@ -26,11 +26,10 @@ Route::post('/register',[RegisterApiController::class,'store'])->name('registera
 Route::middleware('auth:sanctum')->group(function(){
 Route::controller(PostController::class)->group(function() {
     Route::get('/products','index');
-    Route::post('/products','store');
     Route::get('/products/{id}','show');
+    Route::get('/products/search/{name}','search');
+    Route::post('/products','store');
     Route::put('/products/{id}','update');
     Route::delete('/products/{id}','destroy');
-    Route::get('/products/search/{name}','search');
-
 });
 });
