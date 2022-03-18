@@ -21,8 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        "is_admin"
-        
+        'role_id'
+
+
     ];
 
     /**
@@ -44,11 +45,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function cart(){
+    public function cart()
+    {
         return $this->hasOne(Cart::class);
     }
-    public function role(){
+    public function role()
+    {
         return $this->hasOne(Role::class);
     }
-    
 }

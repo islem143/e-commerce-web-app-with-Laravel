@@ -14,7 +14,7 @@ class AddRolesColumn extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId("role_id")->constrained()->onDelete('cascade');
+            $table->foreignId("role_id")->default(3)->constrained()->onDelete('cascade');
         });
     }
 
@@ -27,6 +27,7 @@ class AddRolesColumn extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('role_id');
+            
         });
     }
 }
