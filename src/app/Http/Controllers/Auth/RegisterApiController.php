@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class RegisterApiController extends Controller
 {
     public function store(Request $request){
-
+       
         $this->validate($request, [
             'email' => "required|email|unique:App\Models\User,email",
             "name" => "required|max:255",
@@ -21,7 +21,7 @@ class RegisterApiController extends Controller
             'email' => $request->email,
             "name" => $request->name,
             "password" => Hash::make($request->password),
-            'is_admin'=>false
+            'is_admin'=>true
         ]);
 
         $token=$user->createToken('myapptoken')->plainTextToken;

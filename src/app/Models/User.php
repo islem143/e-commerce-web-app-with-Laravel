@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        "is_admin"
         
     ];
 
@@ -45,6 +46,9 @@ class User extends Authenticatable
 
     public function cart(){
         return $this->hasOne(Cart::class);
+    }
+    public function role(){
+        return $this->hasOne(Role::class);
     }
     
 }

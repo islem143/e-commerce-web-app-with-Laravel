@@ -25,6 +25,8 @@ class LoginController extends Controller
            
             return back()->with('status','Invalid login credentials');
         }
+        
+        
         $request->session()->regenerate();
         return redirect()->route('dashboard.index');
 

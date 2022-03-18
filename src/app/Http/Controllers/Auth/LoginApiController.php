@@ -20,10 +20,11 @@ class LoginApiController extends Controller
       
         $user=User::where('email',$request->email)->first();
         if(!$user){
-            return Response(["message"=>'user with this email not found'],404);
+            return Response(["errors"=>["email"=>"User with this email not found"]],404);
+    
         } 
         if(!Hash::check($request->password,$user->password)){
-            return Response(["message"=>'Invalid password'],401);
+            return Response(["errors"=>["password"=>"Invalid Password"]],401);
 
         }
 
