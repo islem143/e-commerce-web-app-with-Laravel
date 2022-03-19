@@ -16,13 +16,12 @@ class AdminMiddleware
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
-    {   
-        if(Auth::user()->is_admin){
+    {
+        if (Auth::user()->role_id == "1") {
             return $next($request);
-        }else{
-            
-            return Response(["message"=>"you are not an admin"],403);
-        }
+        } else {
 
+            return Response(["message" => "you are not an admin"], 403);
+        }
     }
 }

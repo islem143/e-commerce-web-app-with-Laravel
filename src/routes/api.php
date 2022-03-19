@@ -19,11 +19,19 @@ use App\Models\Product;
 */
 
 //Auth
-Route::middleware('auth:sanctum')->post('/logout',[LogoutApiController::class,'store'])->name('logout');
-Route::post('/login',[LoginApiController::class,'store'])->name('login');
-Route::post('/register',[RegisterApiController::class,'store'])->name('registerapi');
+Route::middleware('auth:sanctum')->post('/logout', [LogoutApiController::class, 'store'])->name('logout');
+Route::post('/login', [LoginApiController::class, 'store'])->name('login');
+Route::post('/register', [RegisterApiController::class, 'store'])->name('registerapi');
+
 //Products
-Route::get('/products',[PostController::class,'index']);
+Route::get('/products', [PostController::class, 'index']);
+Route::get('/products/{id}', [PostController::class, 'show']);
+Route::get('/products/search/{name}', [PostController::class, 'search']);
+Route::middleware(['auth:sanctum', 'isAdmin'])->post('/products', [PostController::class, 'store']);
+Route::middleware(['auth:sanctum', 'isAdmin'])->put('/products/{id}', [PostController::class, 'put']);
+Route::middleware(['auth:sanctum', 'isAdmin'])->delete('/products/{id}', [PostController::class, 'delete']);
+
+
 // Route::middleware(['auth:sanctum','isAdmin'])->group(function(){
 // Route::controller(PostController::class)->group(function() {
 //     Route::get('/products','index');
