@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdminMiddleware
+class Delevery
 {
     /**
      * Handle an incoming request.
@@ -17,11 +17,11 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->role_id == "1") {
+        if (Auth::user()->role_id == "2") {
             return $next($request);
         } else {
 
-            return Response(["message" => "acess denied"], 403);
-        }
+            return Response(["message" => "access denied"], 403);
+        } return $next($request);
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/dashobard', function () {
     return view('dashboard.index');
 })->name('dashboard.index');
-
+//Route::get('images/{filename}',[ImageController::class,'image']);
 
 Route::get('/register',[RegisterController::class,'index'])->name('auth.register');
 Route::post('/register',[RegisterController::class,'store']);

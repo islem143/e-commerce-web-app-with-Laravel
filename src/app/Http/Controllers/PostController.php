@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -28,11 +30,31 @@ class PostController extends Controller
         $this->validate($request, [
             "name" => 'required|max:255',
             'description' => 'required',
-            'price' => 'required',
+            'price' => 'required|integer',
+            'quantity' => 'required|integer',
+            'image' => 'required|image|mimes:jpg,png,jpeg|max:2048'
 
         ]);
 
-        return Product::create($request->all());
+
+
+        $path = $request->file('image')->store('images');
+
+        $path = "storage/" . $path;
+
+
+
+
+        return Product::create([
+            "name" => $request->name,
+            "description" => $request->description,
+            "price" => $request->price,
+            "img_url" => $path,
+            'quantity' => $request->quantity,
+            "slug" => $request->name
+
+
+        ]);
     }
 
     /**
@@ -44,8 +66,15 @@ class PostController extends Controller
     public function show($id)
 
     {
-
+        $product = Product::find($id);
+        if (!$product) {
+            return Response(["error" => "product not found"], 404);
+        }
         return Product::find($id);
+    }
+
+    public function count(){
+        return Product::all()->count();
     }
 
     /**
@@ -57,7 +86,7 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $product = Product::find($id);
         $product->update($request->all());
         return $product;
@@ -71,13 +100,12 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        
+     
         return Product::destroy($id);
     }
     public function search($name)
     {
-        
-        return Product::where('name','like','%'.$name.'%')->get();
 
+        return Product::where('name', 'like', '%' . $name . '%')->get();
     }
 }

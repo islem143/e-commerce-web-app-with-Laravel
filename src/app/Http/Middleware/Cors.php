@@ -4,9 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class AdminMiddleware
+class Cors
 {
     /**
      * Handle an incoming request.
@@ -16,12 +15,9 @@ class AdminMiddleware
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
-    {
-        if (Auth::user()->role_id == "1") {
-            return $next($request);
-        } else {
-
-            return Response(["message" => "acess denied"], 403);
-        }
+    {   $response=$next($request);
+        $response->headers->set('Access-Control-Allow-Origin','http://localhost:3000');
+        $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        return $response;
     }
 }

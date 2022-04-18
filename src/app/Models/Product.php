@@ -14,7 +14,8 @@ class Product extends Model
         "slug",
         "description",
         "price",
-        'quantity'
+        'quantity',
+        "img_url"
     ];
 
     public function cartItems(){

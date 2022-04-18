@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 class LoginController extends Controller
 {
     public function index()
-    {
+    {echo asset('storage/file.txt');
+
         return view('auth.login');
     }
 
