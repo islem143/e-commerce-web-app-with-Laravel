@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginApiController;
 use App\Http\Controllers\Auth\LogoutApiController;
 use App\Http\Controllers\Auth\RegisterApiController;
+use App\Http\Controllers\CartProduct;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PostController;
 use Illuminate\Http\Request;
@@ -23,7 +24,6 @@ use App\Models\Product;
 Route::middleware('auth:sanctum')->post('/logout', [LogoutApiController::class, 'store'])->name('logout');
 Route::post('/login', [LoginApiController::class, 'store'])->name('login');
 Route::post('/register', [RegisterApiController::class, 'store'])->name('registerapi');
-Route::middleware('cors')->get('/images', [ImageController::class, 'index']);
 
 //Products
 Route::get('/products', [PostController::class, 'index']);
@@ -33,6 +33,9 @@ Route::get('/products/search/{name}', [PostController::class, 'search']);
 Route::middleware(['auth:sanctum', 'isAdmin'])->post('/products', [PostController::class, 'store']);
 Route::middleware(['auth:sanctum', 'isAdmin'])->put('/products/{id}', [PostController::class, 'update']);
 Route::middleware(['auth:sanctum', 'isAdmin'])->delete('/products/{id}', [PostController::class, 'destroy']);
+
+
+Route::post("/cart-item",[CartProduct::class,"store"]);
 
 
 // Route::middleware(['auth:sanctum','isAdmin'])->group(function(){

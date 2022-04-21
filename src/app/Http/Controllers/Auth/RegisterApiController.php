@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -25,6 +26,10 @@ class RegisterApiController extends Controller
             
 
         ]);
+        Cart::create([
+           "user_id"=>$user->id,
+           "total"=>0
+       ]);
 
         $token = $user->createToken('myapptoken')->plainTextToken;
 
