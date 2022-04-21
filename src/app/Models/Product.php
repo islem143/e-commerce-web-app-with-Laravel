@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-    
-    protected $fillable=[
+
+    protected $fillable = [
         "name",
         "slug",
         "description",
@@ -18,8 +18,12 @@ class Product extends Model
         "img_url"
     ];
 
-    public function cartItems(){
-        return $this->belongsToMany(Cart::class,'cart_products');
+    public function cartItems()
+    {
+        return $this->belongsToMany(Cart::class, 'cart_products');
     }
-
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, "order_items");
+    }
 }
