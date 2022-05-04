@@ -2,23 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cart;
-use App\Models\User;
-use Facade\FlareClient\Http\Response;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
-class CartController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,$id)
+    public function index()
     {
-        return $request->user()->cart->products;
+        return Order::all();
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -28,20 +25,7 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-
-            'total' => 'required|integer',
-
-
-        ]);
-
-
-        return Cart::create([
-            "user_id" => $request->user(),
-            "total" => $request->total
-
-
-        ]);
+       
     }
 
     /**
