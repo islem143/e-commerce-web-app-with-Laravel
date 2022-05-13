@@ -2,35 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cart;
-use App\Models\CartProduct as CartProductModel;
+use App\Models\Order;
 use App\Models\Product;
-use App\Models\User;
-use Facade\FlareClient\Http\Response;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
-class CartProduct extends Controller
+class OrderItems extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, Cart $cart)
-    {    Gate::authorize("show", $cart);
-        return $cart->products;
+    public function index(Request $request, Order $order)
+    {
+        return $order->products;
     }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Cart $cart)
+    public function store(Request $request, Order $order)
     {
-        Gate::authorize("store", $cart);
+        Gate::authorize("store", $order);
         $this->validate($request, [
 
             'productId' => 'required|integer',
@@ -38,7 +35,7 @@ class CartProduct extends Controller
 
 
         ]);
-        $cart->products()->attach($request->productId);
+        $order->products()->attach($request->productId);
         return Response(["message" => "product added"], 201);
     }
 
@@ -48,13 +45,13 @@ class CartProduct extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Cart $cart, Product $product)
+    public function show($id, Order $order, Product $product)
     {
-        $cartItem = $cart->products()->find($product);
-        if (!$cartItem) {
-            return Response(["error" => "cart-item not found"], 404);
+        $orderItem = $order->products()->find($product);
+        if (!$orderItem) {
+            return Response(["error" => "order-item not found"], 404);
         }
-        return $cartItem;
+        return $orderItem;
     }
 
     /**
@@ -64,10 +61,9 @@ class CartProduct extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cart $cart, Product $product)
+    public function update(Request $request, Order $order, Product $product)
     {
-
-        Gate::authorize("update", $cart);
+        Gate::authorize("update", $order);
 
         $this->validate($request, [
 
@@ -76,11 +72,11 @@ class CartProduct extends Controller
 
 
         ]);
-        $cart->products()->updateExistingPivot($product, [
+        $order->products()->updateExistingPivot($product, [
             "quantity" => $request->quantity
         ]);
 
-        return Response(["message" => "cart-item updated"], 200);
+        return Response(["message" => "order-item updated"], 200);
     }
 
     /**
@@ -89,11 +85,11 @@ class CartProduct extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Cart $cart, Product $product)
+    public function destroy(Order $order, Product $product)
     {
-        Gate::authorize("destroy", $cart);
-        $product = $cart->products()->detach($product);
+        Gate::authorize("destroy", $order);
+        $product = $order->products()->detach($product);
 
-        return Response(["message" => "cart-item deleted"], 200);
+        return Response(["message" => "order-item deleted"], 200);
     }
 }

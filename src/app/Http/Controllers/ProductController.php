@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 
-class PostController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.

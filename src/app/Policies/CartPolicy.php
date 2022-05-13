@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Cart;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
@@ -23,6 +24,10 @@ class CartPolicy
     private function isAble(User $user, Cart $cart)
     {
         return $user->id == $cart->user_id ? Response::allow() : Response::deny("You do not own this cart.");
+    }
+    private function getAllCarts(User $user)
+    {
+        return $user->role_id == Role::IS_ADMIN;
     }
     public function show(User $user, Cart $cart)
     {

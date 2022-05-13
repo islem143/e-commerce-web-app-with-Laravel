@@ -6,7 +6,7 @@ use App\Http\Controllers\Auth\RegisterApiController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartProduct;
 use App\Http\Controllers\ImageController;
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProductController;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,22 +28,22 @@ Route::post('/login', [LoginApiController::class, 'store'])->name('login');
 Route::post('/register', [RegisterApiController::class, 'store'])->name('registerapi');
 
 //Products
-Route::get('/products', [PostController::class, 'index']);
-Route::get('/products/count', [PostController::class, 'count']);
-Route::get('/products/{id}', [PostController::class, 'show']);
-Route::get('/products/search/{name}', [PostController::class, 'search']);
-Route::middleware(['auth:sanctum', 'isAdmin'])->post('/products', [PostController::class, 'store']);
-Route::middleware(['auth:sanctum', 'isAdmin'])->put('/products/{id}', [PostController::class, 'update']);
-Route::middleware(['auth:sanctum', 'isAdmin'])->delete('/products/{id}', [PostController::class, 'destroy']);
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/count', [ProductController::class, 'count']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::get('/products/search/{name}', [ProductController::class, 'search']);
+Route::middleware(['auth:sanctum', 'isAdmin'])->post('/products', [ProductController::class, 'store']);
+Route::middleware(['auth:sanctum'])->put('/products/{id}', [ProductController::class, 'update']);
+Route::middleware(['auth:sanctum', 'isAdmin'])->delete('/products/{id}', [ProductController::class, 'destroy']);
 
 
 Route::middleware(["auth:sanctum"])->group(function () {
     Route::get('/cart', [CartController::class, "index"]);
-    Route::get("/cart/{cart}/cart-items/", [CartProduct::class, "index"]);
-    Route::get("/cart/{cart}/cart-items/{product}", [CartProduct::class, "show"]);
-    Route::post("/cart/{cart}/cart-items", [CartProduct::class, "store"]);
-    Route::put("/cart/{cart}/cart-items/{product}", [CartProduct::class, "update"]);
-    Route::delete("/cart/{cart}/cart-items/{product}", [CartProduct::class, "destroy"]);
+    Route::get("/cart/{product}", [CartController::class, "show"]);
+    Route::post("/cart", [CartController::class, "store"]);
+    Route::put("/cart/{product}", [CartController::class, "update"]);
+    Route::delete("/cart/{product}", [CartController::class, "destroy"]);
+    Route::delete("/cart/", [CartController::class, "clearCart"]);
 });
 
 

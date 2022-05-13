@@ -3,23 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\CartProduct as CartProductModel;
+use App\Models\Product;
+use App\Models\Role;
 use App\Models\User;
+use App\Services\CartService;
 use Facade\FlareClient\Http\Response;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CartController extends Controller
+
 {
+    protected $cartService;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,$id)
+    public function __construct(CartService $cartService)
     {
-        return $request->user()->cart->products;
+        $this->cartService = $cartService;
     }
 
+    public function index(Request $request)
+    {
 
+        $cart = Cart::with("products")->where("user_id", $request->user()->id)->first();
+        return $cart;
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -27,21 +40,21 @@ class CartController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { 
+        //Gate::authorize("store", $cart);
         $this->validate($request, [
 
-            'total' => 'required|integer',
+            'productId' => 'required|integer',
+            'quantity' => 'required|integer',
 
 
         ]);
+       $cart=$request->user()->cart;
+        $product = Product::find($request->productId);
 
+        $this->cartService->addNewCartItem($cart, $product, $request->quantity);
 
-        return Cart::create([
-            "user_id" => $request->user(),
-            "total" => $request->total
-
-
-        ]);
+        return Response(["message" => "product added"], 201);
     }
 
     /**
@@ -50,9 +63,13 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, Product $product)
     {
-        //
+        $cartItem = $request->user()->cart->products()->find($product);
+        if (!$cartItem) {
+            return Response(["error" => "cart-item not found"], 404);
+        }
+        return $cartItem;
     }
 
     /**
@@ -62,9 +79,24 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        //
+         $cart=$request->user()->cart;
+        //Gate::authorize("update", $cart);
+
+        $this->validate($request, [
+
+
+            'quantity' => 'required|integer',
+
+
+        ]);
+
+        $cartItem = $cart->products()->find($product);
+        $this->cartService->updateCartItem($cart, $cartItem, $product, $request->quantity);
+
+
+        return Response(["message" => "cart-item updated"], 200);
     }
 
     /**
@@ -73,8 +105,21 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy(Request $request, Product $product)
+    {   $cart=$request->user()->cart;
+        Gate::authorize("destroy", $cart);
+        $product = $cart->products()->detach($product);
+
+
+        return Response(["message" => "cart-item deleted"], 200);
     }
+    public function clearCart(Request $request){
+        $cart=$request->user()->cart;
+        $cart->total=0;
+        $cart->save();
+        $cart->products()->detach();
+        return Response(["message" => "cart cleared"], 200);
+
+    }
+
 }

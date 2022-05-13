@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId("user_id")->unique()->constrained()->onDelete('cascade');
             $table->float("total");
             $table->text('address');
+            $table->unsignedTinyInteger("order_status")->default(0);
             $table->timestamps();
         });
     }
