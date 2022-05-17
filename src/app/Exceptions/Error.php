@@ -11,7 +11,7 @@ class Error implements Arrayable, Jsonable, JsonSerializable
 {
     private string $help;
     private string $error;
-    public function __construct(string $help = "", string $error = "")
+    public function __construct(string $help = "", $error = "")
     {
         $this->help = $help;
         $this->error = $error;

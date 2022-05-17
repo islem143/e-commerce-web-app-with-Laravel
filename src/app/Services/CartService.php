@@ -4,7 +4,6 @@ namespace App\Services;
 
 
 use App\Exceptions\ProductExceptions\ProductOutOfStockException;
-use App\Exceptions\ProductExceptions\ProductNotFoundExecption;
 use App\Models\Cart;
 use App\Models\Product;
 
@@ -28,19 +27,16 @@ class CartService
         $cart->products()->attach($product->id, [
             "created_at" =>  \Carbon\Carbon::now(),
             "updated_at" => \Carbon\Carbon::now(),
+            "total" => $product->price,
             "quantity" => $quantity
         ]);
     }
     protected function checkProductStock(Product $product, $quantity)
     {
 
-        if (!$product) {
-            throw new ProductNotFoundExecption();
-            //return Response(["message" => "product don't exist"], 404);
-        } else if ($product->quantity == 0 or ($product->quantity - $quantity < 0)) {
-            //dd($product->quantity - $quantity);
+        if ($product->quantity == 0 or ($product->quantity - $quantity < 0)) {
+
             throw new ProductOutOfStockException();
-            //return Response(["message" => "product out of stock"], 404);
         }
         return true;
     }
@@ -89,7 +85,8 @@ class CartService
         }
 
         $cart->products()->updateExistingPivot($product, [
-            "quantity" => $quantity
+            "quantity" => $quantity,
+            "total" => $quantity * $product->price
         ]);
     }
 }

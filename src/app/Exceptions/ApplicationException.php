@@ -15,7 +15,7 @@ abstract class ApplicationException extends Exception
 
     abstract public function help(): string;
 
-    abstract public function error(): string;
+    abstract public function error(): mixed;
 
     public function render(HttpRequest $request): Response
     {

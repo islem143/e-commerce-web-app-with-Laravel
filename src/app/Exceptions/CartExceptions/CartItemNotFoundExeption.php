@@ -3,12 +3,12 @@
 
 
 
-namespace App\Exceptions\ProductExceptions;
+namespace App\Exceptions\CartExceptions;
 use App\Exceptions\ApplicationException;
 
 use Illuminate\Http\Response;
 
-class ProductNotFoundExeption extends ApplicationException
+class CartItemNotFoundExeption extends ApplicationException
 {
     public function status(): int
     {
@@ -16,11 +16,11 @@ class ProductNotFoundExeption extends ApplicationException
     }
     public function help(): string
     {
-        return "product not found";
+        return "cart-item not found";
     }
     public function error(): string
     {
-        return "product not found";
+        return "cart-item not found";
     }
     /**
      * Render the exception into an HTTP response.

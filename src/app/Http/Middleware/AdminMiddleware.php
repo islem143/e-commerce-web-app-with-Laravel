@@ -21,7 +21,7 @@ class AdminMiddleware
             return $next($request);
         } else {
 
-            return Response(["message" => "acess denied"], 403);
+            return Response(["message" => "access denied"], 403);
         }
     }
 }

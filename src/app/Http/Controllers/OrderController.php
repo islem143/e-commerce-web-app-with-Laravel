@@ -12,9 +12,9 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Order::all();
+        return $request->user()->orders;
     }
 
     /**
@@ -25,6 +25,9 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            ""
+        ])
     }
 
     /**

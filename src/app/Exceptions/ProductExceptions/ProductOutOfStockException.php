@@ -2,7 +2,9 @@
 
 
 
-namespace App\ProductExceptions\Exceptions;
+namespace App\Exceptions\ProductExceptions;
+
+use App\Exceptions\ApplicationException;
 
 
 use Illuminate\Http\Response;
