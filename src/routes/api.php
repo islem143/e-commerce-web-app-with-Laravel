@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterApiController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartProduct;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Models\Cart;
 use Illuminate\Http\Request;
@@ -22,19 +23,46 @@ use App\Models\Product;
 |
 */
 
+Route::prefix("admin")->group(function () {
+    Route::middleware(["auth:sanctum", 'roles:admin'])->group(function () {
+        //products
+        Route::get('/products', [ProductController::class, 'index']);
+        Route::get('/products/count', [ProductController::class, 'count'])->middleware(['auth:sanctum', 'roles:admin']);
+        Route::get('/products/{id}', [ProductController::class, 'show']);
+        Route::get('/products/search/{name}', [ProductController::class, 'search']);
+        Route::post('/products', [ProductController::class, 'store']);
+        Route::put('/products/{id}', [ProductController::class, 'update']);
+        Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+    });
+    Route::middleware(["auth:sanctum", 'roles:client'])->group(function () {
+        //products
+        // Route::get('/products', [ProductController::class, 'index']);
+        // Route::get('/products/count', [ProductController::class, 'count'])->middleware(['auth:sanctum', 'roles:admin']);
+        // Route::get('/products/{id}', [ProductController::class, 'show']);
+        // Route::get('/products/search/{name}', [ProductController::class, 'search']);
+         Route::post('/orders', [OrderController::class, 'store']);
+        // Route::put('/products/{id}', [ProductController::class, 'update']);
+        // Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+    });
+
+
+});
+
+Route::middleware("auth:sanctum")->post('/orders', [OrderController::class, 'store']);
+
+
 //Auth
 Route::middleware('auth:sanctum')->post('/logout', [LogoutApiController::class, 'store'])->name('logout');
 Route::post('/login', [LoginApiController::class, 'store'])->name('login');
 Route::post('/register', [RegisterApiController::class, 'store'])->name('registerapi');
 
 //Products
-Route::get('/products', [ProductController::class, 'index'])->middleware(['auth:sanctum', 'roles:IS_ADMIN']);
-Route::get('/products/count', [ProductController::class, 'count']);
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/count', [ProductController::class, 'count'])->middleware(['auth:sanctum', 'roles:admin']);;
 Route::get('/products/{id}', [ProductController::class, 'show']);
 Route::get('/products/search/{name}', [ProductController::class, 'search']);
-Route::middleware(['auth:sanctum', 'isAdmin'])->post('/products', [ProductController::class, 'store']);
-Route::middleware(['auth:sanctum'])->put('/products/{id}', [ProductController::class, 'update']);
-Route::middleware(['auth:sanctum', 'isAdmin'])->delete('/products/{id}', [ProductController::class, 'destroy']);
+Route::middleware(['auth:sanctum', 'roles:admin'])->post('/products', [ProductController::class, 'store']);
+
 
 
 Route::middleware(["auth:sanctum"])->group(function () {

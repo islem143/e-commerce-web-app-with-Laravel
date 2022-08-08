@@ -8,15 +8,28 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+    public const PENDING = 1;
+    public const ON_DELEVERY = 2;
+    public const DELEVERED = 3;
+    public const CANCELED = 4;
+
+    protected $fillable = [
+
+        "user_id",
+        "transaction_id",
+        "userinfo_id",
+        "total",
+        "status"
+    ];
 
 
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
-    public function products(){
-        return $this->hasMany(Product::class,"order_items");
-        
-    } 
-
+    public function products()
+    {
+        return $this->hasMany(Product::class, "order_items");
+    }
 }

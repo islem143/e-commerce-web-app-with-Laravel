@@ -9,6 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
+
     protected $fillable = [
         "name",
         "slug",
@@ -17,6 +18,10 @@ class Product extends Model
         'quantity',
         "img_url"
     ];
+    // public function toArray($request){
+    //      dd($request);
+    //     return ["1"=>4];
+    // }
 
     public function cartItems()
     {

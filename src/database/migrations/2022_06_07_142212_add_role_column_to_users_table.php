@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddTotalColumn extends Migration
+class AddRoleColumnToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddTotalColumn extends Migration
      */
     public function up()
     {
-        Schema::table('carts', function (Blueprint $table) {
-            $table->float("total");
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId("role_id")->nullable()->constrained()->nullOnDelete();
         });
     }
 
@@ -25,8 +25,8 @@ class AddTotalColumn extends Migration
      */
     public function down()
     {
-        Schema::table('carts', function (Blueprint $table) {
-            $table->dropColumn("total");
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn("role_id");
         });
     }
 }

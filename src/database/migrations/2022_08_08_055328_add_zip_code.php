@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddUniqueTogether extends Migration
+class AddZipCode extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddUniqueTogether extends Migration
      */
     public function up()
     {
-        Schema::table('cart_products', function (Blueprint $table) {
-            $table->unique(["product_id","cart_id"]);
-            
+        Schema::table('user_info', function (Blueprint $table) {
+            $table->string("zip_code");
         });
     }
 
@@ -26,8 +25,8 @@ class AddUniqueTogether extends Migration
      */
     public function down()
     {
-        Schema::table('cart_products', function (Blueprint $table) {
-            //
+        Schema::table('user_info', function (Blueprint $table) {
+            $table->dropColumn("zip_code");
         });
     }
 }

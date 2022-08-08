@@ -8,7 +8,7 @@ use App\Models\Cart;
 
 use App\Models\Product;
 
-use App\Services\CartService;
+use App\Modules\Cart\CartService;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -29,9 +29,7 @@ class CartController extends Controller
 
     public function index(Request $request)
     {
-
-        $cart = Cart::with("products")->where("user_id", $request->user()->id)->first();
-        return $cart;
+        return $this->cartService->getCartWithProducts($request->user()->id);
     }
     /**
      * Store a newly created resource in storage.
@@ -41,20 +39,9 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //Gate::authorize("store", $cart);
-        $this->validate($request, [
-
-            'productId' => 'required|integer',
-            'quantity' => 'required|integer',
 
 
-        ]);
-        $cart = $request->user()->cart;
-        $product = Product::find($request->productId);
-        if (!$product) {
-            throw new ProductNotFoundExeption();
-        }
-        $this->cartService->addNewCartItem($cart, $product, $request->quantity);
+        $this->cartService->addNewCartItem($request->user()->id, $request->toArray());
 
         return Response(["message" => "product added"], 201);
     }
@@ -67,12 +54,7 @@ class CartController extends Controller
      */
     public function show(Request $request, Product $product)
     {
-        $cartItem = $request->user()->cart->products()->find($product);
-        if (!$cartItem) {
-            throw new CartItemNotFoundExeption();
-            //return Response(["error" => "cart-item not found"], 404);
-        }
-        return $cartItem;
+        return $this->cartService->getCartItem($request->user()->id, $product);
     }
 
     /**
@@ -84,22 +66,8 @@ class CartController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $cart = $request->user()->cart;
-        //Gate::authorize("update", $cart);
 
-        $this->validate($request, [
-
-
-            'quantity' => 'required|integer',
-
-
-        ]);
-
-        $cartItem = $cart->products()->find($product);
-        if (!$cartItem) {
-            throw new CartItemNotFoundExeption();
-        }
-        $this->cartService->updateCartItem($cart, $cartItem, $product, $request->quantity);
+        $this->cartService->updateCartItem($request->user()->id, $request->toArray(), $product);
 
 
         return Response(["message" => "cart-item updated"], 200);
@@ -125,10 +93,7 @@ class CartController extends Controller
     }
     public function clearCart(Request $request)
     {
-        $cart = $request->user()->cart;
-        $cart->total = 0;
-        $cart->save();
-        $cart->products()->detach();
+        $this->cartService->clearCart($request->user()->id);
         return Response(["message" => "cart cleared"], 200);
     }
 }

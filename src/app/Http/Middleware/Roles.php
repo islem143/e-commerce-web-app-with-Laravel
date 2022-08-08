@@ -4,9 +4,9 @@ namespace App\Http\Middleware;
 
 use App\Models\Role;
 use Closure;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 
 class Roles
 {
@@ -25,16 +25,24 @@ class Roles
             "client" => Role::IS_CLIENT
         ];
         if (!Auth::check()) {
-            return Response("access denied", 403);
+            return Response(["message"=>"access denied"],403);
         }
+   
         if ($request->user()->role_id == Role::IS_ADMIN) {
             return $next($request);
         }
-
+   
+       
         foreach ($roles as $role) {
-            if ($request->user()->role_id == $rolesMap[$role]) {
-                return $next($request);
+            
+            if (!($request->user()->role_id == $rolesMap[$role])) {
+                return Response(["message"=>"access denied"],403);
+               
             }
+            return $next($request);
+
+
         }
+  
     }
 }

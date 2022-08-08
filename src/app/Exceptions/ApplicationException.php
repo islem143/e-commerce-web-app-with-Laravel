@@ -3,7 +3,7 @@
 
 namespace App\Exceptions;
 
- 
+
 use Exception;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Http\Response;

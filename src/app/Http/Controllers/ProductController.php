@@ -2,13 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ProductExceptions\ProductNotFoundExeption;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
+use App\Modules\Product\ProductService;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
+    private $productService;
+    public function __construct(ProductService $service)
+    {
+        $this->productService = $service;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +25,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::all();
+        return $this->productService->getAll();
     }
 
     /**
@@ -40,7 +49,7 @@ class ProductController extends Controller
 
         $path = $request->file('image')->store('images');
 
-        $path = "storage/" . $path;
+        //$path = "storage/" . $path;
 
 
 
@@ -63,17 +72,15 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request,$id)
 
     {
-        $product = Product::find($id);
-        if (!$product) {
-            return Response(["error" => "product not found"], 404);
-        }
-        return Product::find($id);
+       
+        return $this->productService->get($id);
     }
 
-    public function count(){
+    public function count()
+    {
         return Product::all()->count();
     }
 
@@ -86,10 +93,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $product = Product::findOrFail($id);
-        $product->update($request->all());
-        return $product;
+        return $this->productService->update($id, $request->all());
     }
 
     /**
@@ -100,8 +104,8 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-     
-        return Product::findOrFail($id)->delete();
+
+        return $this->productService->delete($id);
     }
     public function search($name)
     {

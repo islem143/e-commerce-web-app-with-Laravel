@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDefaultToIsadmin extends Migration
+class AddTransactionId extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddDefaultToIsadmin extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->boolean('is_admin')->default(false)->change();
+        Schema::table('orders', function (Blueprint $table) {
+            $table->integer("transaction_id");
         });
     }
 
@@ -25,8 +25,8 @@ class AddDefaultToIsadmin extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->boolean('is_admin');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropColumn("transaction_id");
         });
     }
 }

@@ -10,32 +10,29 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginApiController extends Controller
 {
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
         $this->validate($request, [
             'email' => "required|email",
-            
+
             'password' =>  "required"
         ]);
-      
-        $user=User::where('email',$request->email)->first();
-        if(!$user){
-            return Response(["errors"=>["email"=>"User with this email not found"]],404);
-    
-        } 
-        if(!Hash::check($request->password,$user->password)){
-            return Response(["errors"=>["password"=>"Invalid Password"]],401);
 
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            return Response(["errors" => ["email" => ["User with this email not found"]], "message" => "not found"], 404);
+        }
+        if (!Hash::check($request->password, $user->password)) {
+            return Response(["errors" => ["password" => ["Invalid Password"]], "message" => "invalid password"], 401);
         }
 
-        $token=$user->createToken('myapptoken')->plainTextToken;
+        $token = $user->createToken('myapptoken')->plainTextToken;
 
-        $response=[
-            'user'=>$user,
-            'token'=>$token
+        $response = [
+            'user' => $user,
+            'token' => $token
         ];
-        return response($response,201);
-
-        
+        return response($response, 201);
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDeleveryManColumn extends Migration
+class AddStateColum extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddDeleveryManColumn extends Migration
      */
     public function up()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->unsignedBigInteger("delevery_id")->nullable()->constrained()->onDelete("null");
-            $table->foreign("delevery_id")->references("id")->on("users");
+        Schema::table('user_info', function (Blueprint $table) {
+            $table->string("state");
+            $table->string("city");
         });
     }
 
@@ -26,8 +26,9 @@ class AddDeleveryManColumn extends Migration
      */
     public function down()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            //
+        Schema::table('user_info', function (Blueprint $table) {
+            $table->dropColumn("state");
+            $table->dropColumn("city");
         });
     }
 }

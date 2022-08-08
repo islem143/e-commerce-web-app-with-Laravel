@@ -3,25 +3,25 @@
 
 
 
-namespace App\Exceptions\ProductExceptions;
+namespace App\Exceptions\CartExceptions;
 
 use App\Exceptions\ApplicationException;
 
 use Illuminate\Http\Response;
 
-class ProductNotFoundExeption extends ApplicationException
+class CartInvalidQuantityException extends ApplicationException
 {
     public function status(): int
     {
-        return Response::HTTP_NOT_FOUND;
+        return Response::HTTP_BAD_REQUEST;
     }
     public function help(): string
     {
-        return "product not found";
+        return "quantity already one";
     }
     public function error(): string
     {
-        return "product not found";
+        return "quantity already one";
     }
     /**
      * Render the exception into an HTTP response.

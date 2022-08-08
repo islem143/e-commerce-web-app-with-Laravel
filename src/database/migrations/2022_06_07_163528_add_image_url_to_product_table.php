@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddStatusColumn extends Migration
+class AddImageUrlToProductTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddStatusColumn extends Migration
      */
     public function up()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->smallInteger("status")->default(1);
+        Schema::table('products', function (Blueprint $table) {
+            $table->string("img_url");
         });
     }
 
@@ -25,7 +25,7 @@ class AddStatusColumn extends Migration
      */
     public function down()
     {
-        Schema::table('orders', function (Blueprint $table) {
+        Schema::table('products', function (Blueprint $table) {
             //
         });
     }
