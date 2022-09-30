@@ -27,50 +27,61 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $this->validate($request, [
+    {       
+            $this->validate($request, [
 
-            "address1" => "required|string",
-            "firstname" => "required|string",
-            "lastname" => "required|string",
-            "state" => "required|string",
-            "zipCode" => "required|integer",
-            "city" => "required|string",
-            "paymentMethodId" => "required"
-        ]);
+                "address1" => "required|string",
+                "firstname" => "required|string",
+                "lastname" => "required|string",
+                "state" => "required|string",
+                "zipCode" => "required|integer",
+                "city" => "required|string",
+                "paymentMethodId" => "required"
+            ]);
 
 
 
-        UserInfo::create([
-            "address" => $request->address1,
-            "first_name" => $request->firstname,
-            "last_name" => $request->lastname,
-            "zip_code" => $request->zipCode,
-            "state" => $request->state,
-            "city" => $request->state,
-            "user_id" => Auth::user()->id,
-            "phone"=>0
+            UserInfo::create([
+                "address" => $request->address1,
+                "first_name" => $request->firstname,
+                "last_name" => $request->lastname,
+                "zip_code" => $request->zipCode,
+                "state" => $request->state,
+                "city" => $request->state,
+                "user_id" => Auth::user()->id,
+                "phone"=>0
 
-        ]);
+            ]);
         $cart = $request->user()->cart;
         $cartTotal = $cart->total;
         $cartItems = $cart->products;
+
+      
+
         try {
-            $user=Auth::user();
-            $payment = $user->charge($cartTotal, $request->paymentMethodId);
-            $payment = $payment->asStripePaymentIntent();
+             $user = Auth::user();
+            // $payment = $user->charge($cartTotal, $request->paymentMethodId);
+            // $payment = $payment->asStripePaymentIntent();
+            // $order = Order::create([
+            //     "user_id" => Auth::user()->id,
+            //     "userinfo_id" => $user->id,
+            //     "total" => $payment->charges->data[0]->amount,
+            //     "transaction_id" => $payment->charges->data[0]->id,
+            //     "status" => Order::PENDING
+            // ]);
             $order = Order::create([
                 "user_id" => Auth::user()->id,
                 "userinfo_id" => $user->id,
-                "total" => $payment->charges->data[0]->amount,
-                "transaction_id" => $payment->charges->data[0]->id,
+                "total" => $cart->total,
+                "transaction_id" => "qsd",
                 "status" => Order::PENDING
             ]);
-            foreach ($cartItems->pivot as $c) {
-
-                $order->products->attach($c->product_id, ["quantity" => $c->quantity]);
+            foreach ($cartItems as $c) {
+              
+                $order->products()->attach($c->pivot->product_id, ["quantity" => $c->pivot->quantity]);
             }
-
+    
+    
             return $order;
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
