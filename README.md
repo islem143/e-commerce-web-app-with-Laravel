@@ -1,4 +1,4 @@
-# e-commerce-web-app-with-Laravel
+# E-commerce-web-app-with-Laravel
 E-commerce web app with Laravel (INCOMPLTE)
 
 ## Features:
