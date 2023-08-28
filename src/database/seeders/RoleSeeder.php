@@ -14,17 +14,17 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        // DB::table("roles")->insert([
-        //     "id" => 1, "type" => "admin", "created_at" =>  \Carbon\Carbon::now(),
-        //     "updated_at" => \Carbon\Carbon::now(),
-        // ]);
-        // DB::table("roles")->insert([
-        //     "id" => 2, "type" => "delevery", "created_at" =>  \Carbon\Carbon::now(),
-        //     "updated_at" => \Carbon\Carbon::now(),
-        // ]);
-        // DB::table("roles")->insert([
-        //     "id" => 3, "type" => "client", "created_at" =>  \Carbon\Carbon::now(),
-        //     "updated_at" => \Carbon\Carbon::now(),
-        // ]);
+        DB::table("roles")->insert([
+            "id" => 1, "type" => "admin", "created_at" =>  \Carbon\Carbon::now(),
+            "updated_at" => \Carbon\Carbon::now(),
+        ]);
+        DB::table("roles")->insert([
+            "id" => 2, "type" => "delevery", "created_at" =>  \Carbon\Carbon::now(),
+            "updated_at" => \Carbon\Carbon::now(),
+        ]);
+        DB::table("roles")->insert([
+            "id" => 3, "type" => "client", "created_at" =>  \Carbon\Carbon::now(),
+            "updated_at" => \Carbon\Carbon::now(),
+        ]);
     }
 }

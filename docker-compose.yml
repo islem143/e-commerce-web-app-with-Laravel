@@ -39,7 +39,11 @@ services:
     build:
      context: .
      dockerfile: DockerFile
+     args:
+      - UID=${UID:-1000}
+      - GID=${GID:-1000}
     container_name: php
+
     volumes:
       - ./src:/var/www/html
     ports:
